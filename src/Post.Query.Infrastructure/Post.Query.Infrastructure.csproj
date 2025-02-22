@@ -11,4 +11,10 @@
       <ProjectReference Include="..\Post.Query.Domain\Post.Query.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Confluent.Kafka" Version="2.8.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
+    </ItemGroup>
+
 </Project>
