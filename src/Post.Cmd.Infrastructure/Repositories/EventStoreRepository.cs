@@ -17,13 +17,13 @@ public class EventStoreRepository : IEventStoreRepository
         _eventStoreCollection = database.GetCollection<EventModel>(config.Value.Collection);
     }
 
-    public async Task SaveAsync(EventModel @event)
-    {
-        await _eventStoreCollection.InsertOneAsync(@event);
-    }
-
     public async Task<List<EventModel>> FindByAggregateId(Guid aggregateId)
     {
         return await _eventStoreCollection.Find(x => x.AggregateIdentifier == aggregateId).ToListAsync();
+    }
+
+    public async Task SaveAsync(EventModel @event)
+    {
+        await _eventStoreCollection.InsertOneAsync(@event);
     }
 }
