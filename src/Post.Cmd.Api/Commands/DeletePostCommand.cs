@@ -2,5 +2,5 @@ using Cqrs.Core.Commands;
 
 namespace Post.Cmd.Api.Commands;
 
-public record DeletePostCommand(string UserName) : BaseCommand
+public record DeletePostCommand(Guid Id, string UserName) : BaseCommand(Id)
 { }

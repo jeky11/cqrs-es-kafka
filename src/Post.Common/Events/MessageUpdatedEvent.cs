@@ -2,5 +2,5 @@ using Cqrs.Core.Events;
 
 namespace Post.Common.Events;
 
-public record MessageUpdatedEvent(string Message) : BaseEvent(nameof(MessageUpdatedEvent))
+public record MessageUpdatedEvent(Guid Id, string Message) : BaseEvent(Id, nameof(MessageUpdatedEvent))
 { }
