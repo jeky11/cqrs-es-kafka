@@ -1,6 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Post.Query.Infrastructure.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+Action<DbContextOptionsBuilder> configureDbContext = o => o
+    .UseLazyLoadingProxies()
+    .UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+builder.Services.AddDbContext<DataBaseContext>(configureDbContext);
+builder.Services.AddSingleton(new DataBaseContextFactory(configureDbContext));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -20,4 +28,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Create db and tables from code
+CreateDataBase();
+
 app.Run();
+
+void CreateDataBase()
+{
+    using var scope = app.Services.CreateScope();
+    var dataBaseContext = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+    dataBaseContext.Database.EnsureCreated();
+}
