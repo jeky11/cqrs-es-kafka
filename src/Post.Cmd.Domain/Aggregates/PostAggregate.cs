@@ -5,7 +5,6 @@ namespace Post.Cmd.Domain.Aggregates;
 
 public class PostAggregate : AggregateRoot
 {
-    private Guid _id;
     private bool _active;
     private string _author = null!;
     private readonly Dictionary<Guid, Tuple<string, string>> _comments = new();
@@ -20,7 +19,7 @@ public class PostAggregate : AggregateRoot
 
     public void Apply(PostCreatedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
         _active = true;
         _author = @event.Author;
     }
@@ -37,12 +36,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException($"The value of {nameof(message)} cannot be null or empty!");
         }
 
-        RaiseEvent(new MessageUpdatedEvent(_id, message));
+        RaiseEvent(new MessageUpdatedEvent(Id, message));
     }
 
     public void Apply(MessageUpdatedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
     }
 
     public void LikePost()
@@ -52,12 +51,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException("You cannot like an inactive post!");
         }
 
-        RaiseEvent(new PostLikedEvent(_id));
+        RaiseEvent(new PostLikedEvent(Id));
     }
 
     public void Apply(PostLikedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
     }
 
     public void AddComment(string comment, string userName)
@@ -72,12 +71,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException($"The value of {nameof(comment)} cannot be null or empty!");
         }
 
-        RaiseEvent(new CommentAddedEvent(_id, Guid.NewGuid(), comment, userName, DateTime.UtcNow));
+        RaiseEvent(new CommentAddedEvent(Id, Guid.NewGuid(), comment, userName, DateTime.UtcNow));
     }
 
     public void Apply(CommentAddedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
         _comments.Add(@event.CommentId, new Tuple<string, string>(@event.Comment, @event.UserName));
     }
 
@@ -103,12 +102,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException($"The value of {nameof(comment)} cannot be null or empty!");
         }
 
-        RaiseEvent(new CommentUpdatedEvent(_id, commentId, comment, userName, DateTime.UtcNow));
+        RaiseEvent(new CommentUpdatedEvent(Id, commentId, comment, userName, DateTime.UtcNow));
     }
 
     public void Apply(CommentUpdatedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
         _comments[@event.CommentId] = new Tuple<string, string>(@event.Comment, @event.UserName);
     }
 
@@ -129,12 +128,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException("You are not allowed to remove a comment that was made by another user");
         }
 
-        RaiseEvent(new CommentRemovedEvent(_id, commentId));
+        RaiseEvent(new CommentRemovedEvent(Id, commentId));
     }
 
     public void Apply(CommentRemovedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
         _comments.Remove(@event.CommentId);
     }
 
@@ -150,12 +149,12 @@ public class PostAggregate : AggregateRoot
             throw new InvalidOperationException("You are not allowed to remove a post that was made by another user");
         }
 
-        RaiseEvent(new PostRemovedEvent(_id));
+        RaiseEvent(new PostRemovedEvent(Id));
     }
 
     public void Apply(PostRemovedEvent @event)
     {
-        _id = @event.Id;
+        Id = @event.Id;
         _active = false;
     }
 }

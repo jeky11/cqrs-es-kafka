@@ -50,9 +50,15 @@ public class EventStore : IEventStore
             version--;
             @event.Version = version;
             var eventType = @event.GetType().Name;
-            var eventModel = new EventModel(
-                aggregateId, nameof(PostAggregate), version, eventType, @event,
-                DateTime.UtcNow);
+            var eventModel = new EventModel
+            {
+                AggregateIdentifier = aggregateId,
+                AggregateType = nameof(PostAggregate),
+                Version = version,
+                EventType = eventType,
+                EventData = @event,
+                TimeStamp = DateTime.UtcNow
+            };
 
             await _eventStoreRepository.SaveAsync(eventModel);
             await _eventProducer.ProduceAsync(topic, @event);
