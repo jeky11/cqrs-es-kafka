@@ -78,7 +78,7 @@ public class EventHandler(IPostRepository postRepository, ICommentRepository com
 
     public async Task On(CommentRemovedEvent @event)
     {
-        await _commentRepository.DeleteAsync(@event.Id);
+        await _commentRepository.DeleteAsync(@event.CommentId);
     }
 
     public async Task On(PostRemovedEvent @event)
