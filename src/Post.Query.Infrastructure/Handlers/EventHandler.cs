@@ -51,7 +51,7 @@ public class EventHandler(IPostRepository postRepository, ICommentRepository com
         var comment = new CommentEntity
         {
             PostId = @event.Id,
-            CommentId = @event.Id,
+            CommentId = @event.CommentId,
             CommentDate = @event.CommentDate,
             Comment = @event.Comment,
             UserName = @event.UserName,
