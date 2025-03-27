@@ -47,7 +47,7 @@ public class EventStore : IEventStore
 
         foreach (var @event in events)
         {
-            version--;
+            version++;
             @event.Version = version;
             var eventType = @event.GetType().Name;
             var eventModel = new EventModel

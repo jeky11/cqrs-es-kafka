@@ -25,6 +25,7 @@ public class NewPostController(ILogger<NewPostController> logger, ICommandDispat
             return StatusCode(
                 StatusCodes.Status201Created, new NewPostResponse
                 {
+                    Id = id,
                     Message = "New Post Created",
                 });
         }
@@ -44,7 +45,6 @@ public class NewPostController(ILogger<NewPostController> logger, ICommandDispat
             return StatusCode(
                 StatusCodes.Status500InternalServerError, new NewPostResponse
                 {
-                    Id = id,
                     Message = safeErrorMessage,
                 });
         }
