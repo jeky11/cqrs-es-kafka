@@ -17,5 +17,5 @@ public record EventModel
     public string? AggregateType { get; set; }
     public int Version { get; set; }
     public string? EventType { get; set; }
-    public BaseEvent? EventData { get; set; }
+    public BaseEvent EventData { get; set; } = null!;
 }
