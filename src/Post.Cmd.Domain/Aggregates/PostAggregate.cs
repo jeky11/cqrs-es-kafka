@@ -5,7 +5,7 @@ namespace Post.Cmd.Domain.Aggregates;
 
 public class PostAggregate : AggregateRoot
 {
-    private bool _active;
+    public bool Active { get; private set; }
     private string _author = null!;
     private readonly Dictionary<Guid, Tuple<string, string>> _comments = new();
 
@@ -20,13 +20,13 @@ public class PostAggregate : AggregateRoot
     public void Apply(PostCreatedEvent @event)
     {
         Id = @event.Id;
-        _active = true;
+        Active = true;
         _author = @event.Author;
     }
 
     public void EditMessage(string message)
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("You cannot edit the message of an inactive post!");
         }
@@ -46,7 +46,7 @@ public class PostAggregate : AggregateRoot
 
     public void LikePost()
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("You cannot like an inactive post!");
         }
@@ -61,7 +61,7 @@ public class PostAggregate : AggregateRoot
 
     public void AddComment(string comment, string userName)
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("You cannot add a comment of an inactive post!");
         }
@@ -82,7 +82,7 @@ public class PostAggregate : AggregateRoot
 
     public void EditComment(Guid commentId, string comment, string userName)
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("You cannot edit a comment of an inactive post!");
         }
@@ -113,7 +113,7 @@ public class PostAggregate : AggregateRoot
 
     public void RemoveComment(Guid commentId, string userName)
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("You cannot remove a comment of an inactive post!");
         }
@@ -139,7 +139,7 @@ public class PostAggregate : AggregateRoot
 
     public void DeletePost(string userName)
     {
-        if (!_active)
+        if (!Active)
         {
             throw new InvalidOperationException("The post has already been removed");
         }
@@ -155,6 +155,6 @@ public class PostAggregate : AggregateRoot
     public void Apply(PostRemovedEvent @event)
     {
         Id = @event.Id;
-        _active = false;
+        Active = false;
     }
 }

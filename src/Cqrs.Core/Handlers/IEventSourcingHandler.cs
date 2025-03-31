@@ -6,4 +6,5 @@ public interface IEventSourcingHandler<T>
 {
     Task<T> GetByIdAsync(Guid id);
     Task SaveAsync(AggregateRoot aggregate);
+    Task RepublishEventsAsync();
 }
