@@ -18,4 +18,4 @@ Learn how to create microservices in C# that are based on CQRS and Event Sourcin
 * Dependency Injection
 * Docker
 
-https://skuvault.udemy.com/course/net-microservices-cqrs-event-sourcing-with-kafka/learn/lecture/29894562
+https://www.udemy.com/course/net-microservices-cqrs-event-sourcing-with-kafka
