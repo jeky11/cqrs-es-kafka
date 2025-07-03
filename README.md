@@ -1,4 +1,4 @@
-# cqrs-es-kafka
+# .NET Microservices: CQRS & Event Sourcing with Kafka
 Learn how to create microservices in C# that are based on CQRS and Event Sourcing. Powered by .NET and Apache Kafka.
 
 * CQRS
